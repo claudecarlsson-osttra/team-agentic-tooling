@@ -6,11 +6,29 @@ on:
 
 env:
   REGISTRY: artifactory.trioptima.net
-  # Assuming your docker repository layout inside Artifactory is named 'docker-local'
   IMAGE_NAME: artifactory.trioptima.net/docker-local/team-agentic-tooling
 
 jobs:
+  validate:
+    name: Code Quality & Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Linting Tools
+        run: pip install ruff
+
+      - name: Run Ruff Linter
+        run: ruff check src/
+
   build-and-push:
+    needs: validate
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

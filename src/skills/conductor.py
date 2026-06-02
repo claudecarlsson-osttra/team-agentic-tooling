@@ -1,5 +1,5 @@
-def register_conductor_tools(mcp):
+def register(mcp):
     @mcp.tool()
     def conductor_status() -> str:
         """Get the status of the Conductor module."""
-        return "Conductor module is active and ready."
+        return "Conductor module is dynamically active and ready."
